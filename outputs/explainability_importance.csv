@@ -1,0 +1,16 @@
+feature,importance,method
+owner_event_prob,0.13673729644029087,shap_mean_abs
+contractor_event_prob,0.1354829966650647,shap_mean_abs
+critical_ratio,0.015723424645144025,shap_mean_abs
+float_density_lt5,0.014329342403722616,shap_mean_abs
+low_float_density,0.013637102524606695,shap_mean_abs
+fragility_index,0.013245754328227985,shap_mean_abs
+logic_complexity,0.0120940393823068,shap_mean_abs
+project_duration_baseline,0.01105373041166905,shap_mean_abs
+float_std,0.010344206325489678,shap_mean_abs
+float_mean,0.010219462319364783,shap_mean_abs
+n_edges,0.009936315816161908,shap_mean_abs
+std_duration,0.00975991478071385,shap_mean_abs
+avg_duration,0.009505351099318958,shap_mean_abs
+density,0.009421498351111194,shap_mean_abs
+n_activities,0.007595854304961835,shap_mean_abs

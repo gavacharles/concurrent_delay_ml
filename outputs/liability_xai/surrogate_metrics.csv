@@ -1,0 +1,2 @@
+baseline_project_duration_days,rmse,mae,r2,n_train,n_test,model_used
+90.0,6.021184971538753,4.550458213074331,0.5726044851865895,4800.0,1200.0,xgboost
