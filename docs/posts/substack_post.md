@@ -1,83 +1,122 @@
 # One Schedule, Many Laws
 
-*Why "AI for concurrent delay" should stop looking for the fair answer, and what it found when it did*
+*Concurrent delay, the rise of SHAP, and why explainable AI should explain rather than apportion*
+
+<!-- HERO: outputs/v2/figures/seven_answers.mp4 (or seven_answers_still.png). Caption: "One set of facts, seven legal answers." -->
 
 ---
 
 Take a simple project. Two parallel streams of work run to completion. The contractor's façade package slips by 40 days. Ten days after that slip begins, the employer issues a variation that holds up the services fit-out by 55 days. The project finishes 55 days late.
 
-How much extra time does the contractor get, and how much of the prolongation cost can it recover? That depends on where you are and what you signed:
+How much extra time does the contractor get, and how much of the prolongation cost can it recover? It depends on where you are and what you signed:
 
-- **Strict first in time:** 15 days. The employer is credited only with the delay it added on top of a position the contractor had already lost.
-- **Scotland (City Inn):** around 35 days. With no dominant cause, the concurrent days can be apportioned.
 - **England:** 55 days of time but no money for the concurrent period, as long as the employer's delay actually pushed completion out.
-- **A Cyden-style clause:** 15 days again, for a different reason.
+- **Scotland (City Inn):** around 35 days. With no dominant cause, the concurrent days can be apportioned.
+- **Strict first in time:** 15 days. The employer is credited only with what it added on top.
+- **A Cyden-style clause:** 15 days, because concurrent delay earns nothing.
 
-Same facts, several defensible answers. That's not sloppy analysis. It's the law.
+Same facts, several defensible answers. That isn't sloppy analysis. The law itself gives different answers. This piece covers three things:
+1. how the law got here;
+2. how researchers have started using SHAP and Shapley values on the problem;
+3. why explainable AI is more useful when it *explains the decision* than when it *makes the split*.
 
-## Stop asking AI for the fair split
+## 1. How the law got here
 
-Much current work on AI for delay analysis trains a model and then uses Shapley values or SHAP to split the delay between the parties. My earlier version did the same, and it had two problems.
+<!-- FIGURE: outputs/v2/figures/law_timeline.png (video: law_timeline.mp4). Link: interactive case-law timeline. -->
 
-**First, it asked the wrong question.** There is no single fair split. English law, Scots law, the SCL Protocol and the standard forms have each made a *normative choice* about overlapping causes. A model that outputs one split either quietly picks one of those choices or invents one no court applies.
+**1999–2009: time, not money.** *Henry Boot v Malmaison* (1999) gave the contractor an extension for the period of delay caused by the employer's event, even though its own delay was running at the same time. *Royal Brompton v Hammond* (2001) added a condition: an employer event with no effect on the completion date earns nothing. The first SCL Delay and Disruption Protocol (2002) took a broad view of concurrency, covering delays whose effects are felt at the same time.
 
-**Second, the baseline was wrong.** SHAP measures against the *average* scenario. Legal causation asks what would have happened *but for* the event, against the planned or contractual completion date.
+**2010–2016: actual delay against apportionment.** Scotland and England split.
+- *City Inn v Shepherd* (2010): the Inner House held that where no cause is dominant, the delay may be apportioned fairly and reasonably.
+- *Walter Lilly v Mackay* (2012): called City Inn "inapplicable within this jurisdiction".
+- *De Beers v Atos* (2010): restated time without money.
+- *Adyard v SD Marine* (2011) and *Saga Cruises v Fincantieri* (2016): tightened the English test. Both causes must *in fact* delay completion, felt at the same time, and notional delay doesn't count. Saga's phrase is "a concurrency actually affecting the completion date as then scheduled".
 
-## Model the programme once, then write the law as rules
+**2017–2024: contracting out, time against money.** The standard forms divided:
+- FIDIC 2017 (Sub-Clause 8.5) leaves concurrency to the parties' Special Provisions;
+- NEC4 assesses compensation events prospectively, with time and money together;
+- JCT 2024 stays silent.
 
-1. **Causation is engineering.** The critical path network becomes a causal model. Delay events are interventions, and the outcome is delay to completion beyond the contract date.
-2. **Attribution is law.** Each legal approach is an explicit rule that turns those causal facts into time and money. The rules cover a strict sequence, an actual-delay test, overlapping windows, as-planned impact, City Inn apportionment, contractual exclusion and NEC4's prospective assessment. They also cover neutral events such as epidemics, which give time but no money, and notice conditions that can bar a claim altogether.
+In the courts:
+- *North Midland v Cyden Homes* (2018): upheld a clause that excludes concurrent delay altogether.
+- *Thomas Barnes v Blackburn with Darwen* (2022): the most recent English authority. It awarded 119 days of extension but only 27 days of prolongation money.
 
-None of these rules claims to be *the* answer. The framework makes the choice explicit and testable.
+The law didn't converge on one fair split. It settled on *different* answers, each a deliberate choice about who carries overlapping delay.
 
-## Testing the rules against the cases
+## 2. How delay is analysed, and where SHAP came in
 
-I rebuilt stylised versions of five English cases, taking the dates and figures from the judgments themselves: *Malmaison*, *Adyard*, *Saga Cruises*, *Walter Lilly* and *Thomas Barnes*. Then I asked each rule to reproduce what the court decided.
+Forensic delay analysis rests on established methods: as-planned vs as-built, impacted as-planned, time impact analysis, windows, and collapsed as-built. The SCL Protocol describes them, and tribunals weigh the expert's choice of method (*Thomas Barnes*, para 110). Each method answers a causation question about the programme. None of them says, on its own, how the law allocates overlapping delay.
 
-Reading the judgments corrected me.
+Recently, researchers have turned to game theory and machine learning:
+- **Shapley values:** a fair-division idea from cooperative game theory. Each player gets its average marginal contribution across every order in which the players could join. Huynh, Lucko and Eid (*JCEM*, 2023) apply it to concurrent delay.
+- **SHAP:** the explainable-AI version of the same idea. You train a model to predict project slippage from employer and contractor delays, then use SHAP to split each prediction between them. My own first version of this study did exactly that.
 
-- **Adyard** (para 279) says "there is only concurrency if both events in fact cause delay ... and the delaying effect of the two events is felt at the same time".
-- **Saga** (para 251) requires "a concurrency actually affecting the completion date as then scheduled".
-- **Both** reject notional or theoretical delay.
-- **Thomas Barnes** granted 119 days' extension but only 27 days' prolongation ([148], [157]). The contractor's roof-coverings delay began first. The employer's steel problem followed three weeks later and ran longer.
+It looks rigorous. The maths is elegant, the attributions add up, and the chart is persuasive. But reading SHAP or Shapley values directly as liability shares runs into four problems:
 
-Only one rule reproduces all five cases. **The employer's delay must cause actual delay to completion as then scheduled. If it does, the contractor's concurrent delay doesn't reduce the extension.** The other rules fail in clear ways:
+1. **Wrong baseline.** SHAP measures each factor against the *average* scenario in the data. Legal causation asks what would have happened *but for* the event, against the planned or contractual completion date. In my first version this produced a balanced 20/20 scenario that put 100% of liability on the contractor, and the result flipped to the employer when the network changed slightly.
+2. **One split where the law has several.** A Shapley split is one answer. English law, Scots law and the standard forms have each chosen differently, so a single split either quietly picks one of those choices or invents one no court applies.
+3. **No sense of order.** Shapley averages over every order in which events could happen. The English cases care very much about which delay came first and whether the later one *actually* added delay. In fact you can prove that the two-party Shapley split is simply a first-in-time rule, averaged over both possible orders.
+4. **Circular validation.** The method is usually checked against itself, or against other heuristics scored as if Shapley were the truth.
+
+None of this makes SHAP a bad tool. It makes it the wrong tool *for that question*.
+
+## 3. Explainable AI that explains instead
+
+Instead, I separate the two questions that the SHAP-apportionment approach blends together:
+
+- **Causation is engineering.** The critical path network becomes a causal model. Delay events are interventions, and the outcome is delay to completion beyond the contract date. It handles real MS Project programmes, and reproduces their dates exactly.
+- **Attribution is law.** Each legal approach is an explicit rule on top of that model: an actual-delay test, strict sequence, overlapping windows, as-planned impact, City Inn apportionment, contractual exclusion, NEC4's prospective assessment, neutral events such as epidemics (time but no money), and notice conditions that can bar a claim altogether.
+
+Then explainable AI does what it is good at. It explains which facts and which legal choices move the answer.
+
+**Why bother with XAI at all?** Because it gives decision makers four things:
+- **Transparency:** a tribunal can see why a number came out as it did, not just the number.
+- **Auditability:** every rule is written down and tested, so an opponent can challenge the rule rather than the black box.
+- **Risk before the dispute:** it shows which programmes are exposed to the choice of law, or to drafting, before anyone signs.
+- **Evidence priorities:** it tells the parties which facts actually decide the case, so that's where the evidence effort goes.
+
+## 4. What it found
+
+**Testing the rules against the cases.** I rebuilt stylised versions of five English cases, taking the dates and figures from the judgments: *Malmaison*, *Adyard*, *Saga Cruises*, *Walter Lilly* and *Thomas Barnes*. Only one rule reproduces all five: **the employer's delay must cause actual delay to completion as then scheduled, and if it does, the contractor's concurrent delay doesn't reduce the extension.** The other rules fail in clear ways:
 - a strict first-in-time rule gives *Thomas Barnes* 27 days instead of 119;
-- a theoretical "as-planned impact" rule gives *Adyard* 124 days and *Saga* 9, where the courts gave nothing.
+- a theoretical as-planned rule gives *Adyard* 124 days and *Saga* 9, where the courts gave nothing.
 
-I wrote the winning rule after reading the judgments, so this shows consistency with them, not prediction.
+I wrote the winning rule after reading the judgments, so this is consistency, not prediction.
 
-Three properties follow, and they can be proved:
-1. **The money comes out the same under every English reading.** Under these readings the argument is about time.
-2. **The actual-delay test has a cliff edge.** If the contractor's delay came first, an employer delay one day shorter than the contractor's earns nothing, and one day longer earns its full length.
-3. **Windows analysis isn't monotone.** Shorter windows can give *more* time, depending on where the window boundaries fall.
+<!-- FIGURE: outputs/v2/figures/fidelity_matrix.png -->
 
-## When does the law matter?
+**Two results you can prove:**
+- **Money converges, time doesn't.** Under the English readings the money comes out the same. The argument is about time.
+- **The actual-delay test has a cliff edge.** If the contractor's delay came first, an employer delay one day shorter than the contractor's earns nothing, and one day longer earns its full length.
 
-This is where explainable AI earns its place: not deciding liability, but showing what the answer turns on.
+<!-- FIGURES: outputs/v2/figures/money_vs_time.png, then cliff_edge.mp4 (or cliff_edge_still.png) -->
 
-- **Simulated programmes.** Across 6,000 of them, the English readings disagree about 31% of the time. A model using only information available before the events are analysed together flags those cases with an AUC of 0.85.
-- **A real project.** The real test was a FIDIC 1999 design-and-build road contract with a 453-day overrun. Its impacted MS Project programme was poor as evidence: over half the activities were held by hard dates, and many had no logic at all. Its own interruptions didn't affect completion. So I rebuilt it *backwards* from the contract completion date. That gives the smallest set of slipped workfronts that explains the overrun exactly: 13 on employer site access and 3 on contractor production.
+**When does the law matter?** Across 6,000 simulated programmes, the English readings disagree about 31% of the time. A model using only information available before the events are analysed together flags those cases with an AUC of 0.85. SHAP then shows why: how much the delay windows overlap, which came first, and whether the two delays sit on parallel paths or the same chain.
 
-On that evidence, **the doctrines differed by only 4 days.** An explainable model over 1,500 variations of the unknowns, with an R² of about 0.95, showed what actually decides the case:
+<!-- FIGURE: outputs/v2/figures/synthetic_summary.png -->
 
-1. **Who controlled access to one pavement workfront.** It drives three-quarters of the overrun.
-2. **Whether a 28-day notice was given.** Without it, the paid days fall to zero and delay damages reach the 10% cap.
-3. **Only then, which concurrency rule applies.**
+**A real project.** I tested it on a FIDIC 1999 design-and-build road contract that finished 453 days late.
+- **The programme was poor as evidence.** Over half its activities were held by hard dates rather than logic, and its own interruptions didn't affect completion.
+- **So I rebuilt it backwards** from the contract completion date. That gives the smallest set of slipped workfronts that explains the overrun exactly: 13 on employer site access and 3 on contractor production.
+- **The doctrines then differed by only 4 days.**
+- **An explainable model over 1,500 variations** of the unknowns (R² about 0.95) showed what actually decides the case:
+  1. who controlled access to one pavement workfront, which drives three-quarters of the overrun;
+  2. whether a 28-day notice was given. Without it, the paid days fall to zero and delay damages reach the 10% cap;
+  3. only then, which concurrency rule applies.
 
-COVID lockdowns, which give time but no money under FIDIC 1999, didn't reduce the paid days. Each lockdown came while site access was already late.
+<!-- FIGURES (anonymised; confirm you may use the project first): outputs/package5/figures/backpropagation.mp4, p5_notice.png, p5_drivers.png -->
+
+The same tool, SHAP, now answers a different question. It doesn't tell you who should pay. It tells you what the answer turns on.
 
 ## What this is not
 
-It isn't a machine that decides disputes. Legal causation involves judgement: what counts as "dominant", or how culpable a party was. The framework turns those judgements into visible parameters and shows how much each one moves the answer. The contract governs everything, and this is a tool for experts, not a replacement for them.
+It isn't a machine that decides disputes. Legal causation involves judgement: what counts as "dominant", or how culpable a party was. The framework turns those judgements into visible parameters and shows how much each one moves the answer. The contract governs everything. It's a tool for experts, not a replacement for them.
 
-## Where this sits
-
-Shapley values have been applied to concurrent delay before (Huynh, Lucko and Eid, *JCEM*, 2023). As far as I can find, nobody has encoded the competing doctrines as separate rules on one causal model, tested them against decided cases, and used explainable AI to map where the law matters on a real programme. If you know of work that does, I'd like to hear about it.
+**Explore it yourself:** the interactive case-law timeline and the concurrent delay explorer let you move the delays and watch each rule respond. <!-- links: share both pages publicly before posting -->
 
 **For delay experts and construction lawyers:**
 - Is the actual-delay test the right reading of English law after *Thomas Barnes*?
-- How would you formalise "dominant cause" in *City Inn*?
+- Have you seen SHAP or Shapley splits used in a real expert report or a tribunal?
 - How should a tribunal treat a programme whose logic can't carry a causal analysis?
 
 ---

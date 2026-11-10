@@ -1,27 +1,32 @@
-Same programme. Same delays. Up to seven different legal answers.
+<!-- MEDIA: document post (carousel): outputs/package5/figures/linkedin_carousel.pdf
+     Alternative: video post with outputs/v2/figures/law_timeline.mp4 or seven_answers.mp4.
+     First comment: link to the Substack piece and the interactive timeline. -->
 
-Concurrent delay comes out differently depending on the law and the contract:
-- England (Malmaison, Walter Lilly, Thomas Barnes): time but no money.
-- Scotland (City Inn): if no cause is dominant, the delay can be apportioned.
-- A Cyden-style clause: concurrency can be contracted out.
-- NEC4: prospective assessment pays for the time it grants.
+Can AI tell us who pays for concurrent delay? I think we've been asking it the wrong question. 👇
 
-So I stopped asking AI for "the fair split". There isn't one. Instead I model the programme once, as a causal model, and write each legal approach as an explicit rule on top of it.
+① The law never agreed on one answer.
+1999 Malmaison: time for the contractor, even if it was also late.
+2010 City Inn: Scotland apportions. 2012 Walter Lilly: England refuses.
+2011–16 Adyard, Saga: the employer's delay must actually push completion out.
+2018 Cyden: you can contract out.
+2022 Thomas Barnes: 119 days of time, only 27 days of money.
 
-What I found:
+② The new trend: use SHAP or Shapley values to "split" the delay. Train a model, attribute the slippage between employer and contractor, and call that the liability share. I did this too. Four problems:
+– it measures against the average project, not the contract date;
+– it gives one split where the law has several;
+– it ignores which delay came first (the two-party Shapley split is just first-in-time averaged over both orders);
+– it's checked against itself.
 
-→ I tested each rule against stylised versions of five English cases, using facts and dates checked against the judgments. Only one rule reproduces all five: the employer's delay must cause actual delay to completion "as then scheduled" (Saga, para 251), and if it does, the contractor's concurrent delay doesn't reduce the extension. A strict first-in-time rule fails Thomas Barnes. A theoretical as-planned impact fails Adyard and Saga. (I wrote the rule after reading the judgments, so this shows consistency, not prediction.)
+③ So use XAI to explain, not to apportion.
+Model the programme once, as a causal model. Write each legal approach as an explicit rule. Then use SHAP to show what moves the answer.
 
-→ Under those English readings, the money comes out the same. The argument is about time.
+What came out:
+→ Only one rule reproduces five English cases (facts checked against the judgments): actual delay first, then no reduction for concurrency.
+→ Money converges across the English readings. Time doesn't, and it has a cliff edge.
+→ On a real FIDIC 1999 road project, the doctrines differed by 4 days. What decided it was who controlled site access and whether a 28-day notice was given.
 
-→ The rule has a cliff edge. One extra day of employer delay can move the extension by the whole of the contractor's delay.
+Why XAI? Transparency for tribunals, rules an opponent can audit, and knowing where the evidence matters.
 
-→ On 6,000 simulated programmes, the English readings disagree about 31% of the time. A model can flag the risky cases before the events are analysed together (AUC 0.85).
+Carousel below. Challenge welcome.
 
-→ On a real FIDIC 1999 road programme, which I rebuilt backwards from the contract completion date, the doctrines differed by only 4 days. What decided the outcome was who controlled access to one workfront, and whether a 28-day notice was given. One missed notice moved delay damages to the 10% cap.
-
-The XAI doesn't decide who is liable. It shows what the answer turns on.
-
-Work in progress. Challenge welcome from delay experts and construction lawyers.
-
-#ConstructionLaw #ConcurrentDelay #DelayAnalysis #ExplainableAI #FIDIC #SCLProtocol
+#ConstructionLaw #ConcurrentDelay #DelayAnalysis #ExplainableAI #SHAP #FIDIC

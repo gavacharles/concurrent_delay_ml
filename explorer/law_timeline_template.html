@@ -1,0 +1,209 @@
+<title>Concurrent Delay Case Law</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=Spline+Sans+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: three jurisdiction lanes as a law-report index strip, then a chronological docket of holdings, each tagged with the rule it supports and how it was checked. */
+:root {
+  --paper: #f2f3ef; --sheet: #ffffff; --ink: #1b1f24; --muted: #5b6470; --rule: #d6d9d1; --grid: #e8eae4;
+  --op-gate: #0f5c5c; --op-strict: #a23b72; --op-overlap: #b07a00; --op-asplanned: #6b7884;
+  --op-cityinn: #2e7d32; --op-cyden: #6d4c41; --op-nec: #5c4d9a; --op-none: #9aa0a7;
+  --focus: #2456a6;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-data: "Spline Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121518; --sheet: #1a1e23; --ink: #e8eae5; --muted: #9ba4ad; --rule: #2e343a; --grid: #23282d;
+    --op-gate: #4fb3b0; --op-strict: #e07bb0; --op-overlap: #e0b040; --op-asplanned: #a3afba;
+    --op-cityinn: #6cc070; --op-cyden: #c49a86; --op-nec: #a597e8; --op-none: #7d848c; --focus: #7aa5ec;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121518; --sheet: #1a1e23; --ink: #e8eae5; --muted: #9ba4ad; --rule: #2e343a; --grid: #23282d;
+  --op-gate: #4fb3b0; --op-strict: #e07bb0; --op-overlap: #e0b040; --op-asplanned: #a3afba;
+  --op-cityinn: #6cc070; --op-cyden: #c49a86; --op-nec: #a597e8; --op-none: #7d848c; --focus: #7aa5ec;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-display); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 56px; display: grid; gap: 24px; }
+h1, h2 { margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(28px, 4.4vw, 44px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+h2 { font-size: 19px; font-weight: 700; }
+p { margin: 0; max-width: 70ch; }
+.eyebrow { font-family: var(--f-data); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lede { font-size: 17px; color: var(--muted); }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 20px; display: grid; gap: 14px; min-width: 0; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip { font: 500 13px var(--f-display); color: var(--ink); background: var(--sheet); border: 1px solid var(--rule);
+  border-radius: 999px; padding: 5px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.chip i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+button:focus-visible, .dot:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.strip { width: 100%; overflow-x: auto; }
+.strip svg { display: block; width: 100%; min-width: 640px; height: auto; }
+.dot { cursor: pointer; }
+.docket { display: grid; gap: 0; }
+.entry { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 4px 18px; padding: 16px 0; border-top: 1px solid var(--grid); }
+.entry:first-child { border-top: 0; }
+.entry.sel { background: linear-gradient(90deg, var(--grid), transparent 70%); }
+.entry .yr { font-family: var(--f-data); font-size: 15px; font-weight: 500; color: var(--muted); padding-top: 2px; }
+.entry .body { display: grid; gap: 6px; min-width: 0; }
+.entry h3 { margin: 0; font-size: 17px; font-weight: 700; }
+.cite { font-family: var(--f-data); font-size: 12.5px; color: var(--muted); overflow-wrap: anywhere; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font: 500 11.5px var(--f-data); border: 1px solid currentColor; border-radius: 999px; padding: 1px 9px; }
+.tag.lane { color: var(--muted); }
+.holding { max-width: 74ch; }
+.eras { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.era { display: grid; gap: 6px; padding-top: 10px; border-top: 3px solid var(--rule); }
+.era b { font-size: 15px; }
+.era span { font-family: var(--f-data); font-size: 12px; color: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12.5px; color: var(--muted); }
+.legend svg { vertical-align: -2px; margin-right: 6px; }
+footer { font-size: 12.5px; color: var(--muted); }
+a { color: var(--focus); }
+@media (max-width: 560px) { .entry { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: no-preference) { .entry { transition: background 200ms ease; } }
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:12px">
+    <span class="eyebrow">Concurrent delay · 1999–2024</span>
+    <h1>How the law on concurrent delay got here</h1>
+    <p class="lede">Twenty-five years of English and Scottish decisions, the SCL Protocol and the standard forms. Each entry shows what it decided, which rule it supports, and how carefully it has been checked.</p>
+  </header>
+
+  <section class="sheet" aria-labelledby="stripH">
+    <h2 id="stripH">Three jurisdictions on one line</h2>
+    <div class="filters" role="group" aria-label="Show a jurisdiction">
+      <button class="chip" data-lane="all" aria-pressed="true">All</button>
+      <button class="chip" data-lane="england" aria-pressed="false">England &amp; Wales</button>
+      <button class="chip" data-lane="scotland" aria-pressed="false">Scotland</button>
+      <button class="chip" data-lane="forms" aria-pressed="false">Guidance &amp; standard forms</button>
+    </div>
+    <div class="strip" id="strip"></div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="sheet" aria-labelledby="erasH">
+    <h2 id="erasH">Three phases</h2>
+    <div class="eras">
+      <div class="era" style="border-color:var(--op-gate)"><span>1999–2009</span><b>Time, not money</b><p>Malmaison gives the contractor time despite its own concurrent delay. Royal Brompton insists the employer event must actually affect completion. The SCL Protocol's first edition takes a broad view.</p></div>
+      <div class="era" style="border-color:var(--op-cityinn)"><span>2010–2016</span><b>Actual delay vs apportionment</b><p>Scotland apportions where no cause is dominant (City Inn). England refuses (Walter Lilly) and tightens the test: both causes must actually delay completion, felt at the same time (Adyard, Saga).</p></div>
+      <div class="era" style="border-color:var(--op-cyden)"><span>2017–2024</span><b>Contracting out, time vs money</b><p>The 2017 forms either leave concurrency to the parties (FIDIC 8.5) or price it prospectively (NEC4). Cyden upholds a clause that excludes it. Thomas Barnes separates 119 days of time from 27 days of money.</p></div>
+    </div>
+  </section>
+
+  <section class="sheet" aria-labelledby="docketH">
+    <h2 id="docketH">The decisions and documents</h2>
+    <div class="docket" id="docket"></div>
+  </section>
+
+  <footer>
+    Checked against the judgment text on the National Archives' Find Case Law service (November 2026) where marked “judgment read”. “Via later judgments” means the passage is known from later judgments that quote it. City Inn and John Doyle come from secondary sources, and the standard-form entries from commentary. Research material, not legal advice. Companion tool: <a href="https://claude.ai/artifact/KpvCVdwAV5myULgHAsyTYy" target="_blank" rel="noopener">Concurrent Delay Explorer</a>.
+  </footer>
+</div>
+
+<script>
+const LAW = /*DATA*/[];
+const OPS = {
+  effective_cause: ["--op-gate", "Supports the actual-delay test (England)"],
+  city_inn: ["--op-cityinn", "Supports apportionment (Scotland)"],
+  contractual_exclusion: ["--op-cyden", "Supports contracting out (Cyden)"],
+  overlap_concurrency: ["--op-overlap", "Supports overlapping windows"],
+  nec4_prospective: ["--op-nec", "Supports prospective assessment (NEC4)"],
+  none: ["--op-none", "No rule: governing law or parties decide"],
+};
+const STATUS = { verified: "judgment read", quoted: "via later judgments", secondary: "secondary source",
+                 commentary: "commentary", form: "standard form" };
+const LANES = { england: ["England & Wales", 0], scotland: ["Scotland", 1], forms: ["Guidance & forms", 2] };
+const $ = (id) => document.getElementById(id);
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+let lane = "all", selected = null;
+
+function drawStrip() {
+  const W = 1000, H = 230, x0 = 150, x1 = 980, y0 = 40, gap = 70;
+  const x = (yr) => x0 + (yr - 1998) / (2025 - 1998) * (x1 - x0);
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Timeline of concurrent delay decisions by jurisdiction">`;
+  for (let yr = 1999; yr <= 2025; yr += 2) {
+    s += `<line x1="${x(yr)}" x2="${x(yr)}" y1="20" y2="${H - 26}" stroke="${css("--grid")}"/>`;
+    s += `<text x="${x(yr)}" y="${H - 8}" font-family="Spline Sans Mono, monospace" font-size="11" fill="${css("--muted")}" text-anchor="middle">${yr}</text>`;
+  }
+  Object.entries(LANES).forEach(([k, [label, i]]) => {
+    const y = y0 + i * gap;
+    s += `<text x="4" y="${y + 4}" font-size="12.5" font-weight="600" fill="${css("--muted")}">${label}</text>`;
+    s += `<line x1="${x0 - 8}" x2="${x1}" y1="${y}" y2="${y}" stroke="${css("--grid")}" stroke-width="6" stroke-linecap="round"/>`;
+  });
+  const seen = {};
+  LAW.forEach((ev, idx) => {
+    const key = ev.lane + ev.year; const n = (seen[key] = (seen[key] || 0) + 1) - 1;
+    const same = LAW.filter((e) => e.lane === ev.lane && e.year === ev.year).length;
+    const cx = x(ev.year + (n - (same - 1) / 2) * 0.9), cy = y0 + LANES[ev.lane][1] * gap;
+    const c = css(OPS[ev.operator][0]);
+    const dim = lane !== "all" && lane !== ev.lane;
+    const fill = ev.status === "verified" ? c : ev.status === "quoted" ? mix(c) : css("--sheet");
+    s += `<g class="dot" tabindex="0" role="button" data-i="${idx}" aria-label="${ev.year} ${ev.short}" opacity="${dim ? 0.18 : 1}">
+      <circle cx="${cx}" cy="${cy}" r="${selected === idx ? 11 : 8}" fill="${fill}" stroke="${c}" stroke-width="2.5"/></g>`;
+  });
+  s += `</svg>`;
+  $("strip").innerHTML = s;
+  $("strip").querySelectorAll(".dot").forEach((g) => {
+    const go = () => select(+g.dataset.i, true);
+    g.addEventListener("click", go);
+    g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+  });
+}
+
+function mix(c) {
+  const m = c.match(/^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i);
+  if (!m) return c;
+  const bg = css("--sheet").match(/^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i);
+  return "#" + [1, 2, 3].map((k) => Math.round(parseInt(m[k], 16) * 0.4 + parseInt(bg[k], 16) * 0.6).toString(16).padStart(2, "0")).join("");
+}
+
+function drawLegend() {
+  const sw = (fill, stroke) => `<svg width="12" height="12"><circle cx="6" cy="6" r="4.5" fill="${fill}" stroke="${stroke}" stroke-width="2"/></svg>`;
+  const ops = Object.entries(OPS).map(([k, [v, lab]]) => `<span>${sw(css(v), css(v))}${lab.replace("Supports ", "")}</span>`).join("");
+  const m = css("--muted");
+  $("legend").innerHTML = ops + `<span>${sw(m, m)}judgment read</span><span>${sw(mix(m), m)}via later judgments</span><span>${sw(css("--sheet"), m)}secondary / commentary</span>`;
+}
+
+function drawDocket() {
+  const list = LAW.map((e, i) => ({ ...e, i })).filter((e) => lane === "all" || e.lane === lane)
+    .sort((a, b) => a.year - b.year || a.i - b.i);
+  $("docket").innerHTML = list.map((e) => {
+    const c = `var(${OPS[e.operator][0]})`;
+    return `<article class="entry${selected === e.i ? " sel" : ""}" id="ev${e.i}">
+      <div class="yr">${e.year}</div>
+      <div class="body">
+        <h3>${e.short}</h3>
+        <div class="cite">${e.cite}${e.pinpoint ? " · " + e.pinpoint : ""}</div>
+        <p class="holding">${e.holding}</p>
+        <div class="tags"><span class="tag" style="color:${c}">${OPS[e.operator][1]}</span>
+          <span class="tag lane">${LANES[e.lane][0]}</span><span class="tag lane">${STATUS[e.status]}</span></div>
+      </div></article>`;
+  }).join("");
+}
+
+function select(i, scroll) {
+  selected = i;
+  if (lane !== "all" && LAW[i].lane !== lane) lane = "all";
+  render();
+  const el = $("ev" + i);
+  if (scroll && el) el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+}
+
+function render() {
+  document.querySelectorAll(".chip").forEach((b) => b.setAttribute("aria-pressed", b.dataset.lane === lane));
+  drawStrip(); drawLegend(); drawDocket();
+}
+document.querySelectorAll(".chip").forEach((b) => b.addEventListener("click", () => { lane = b.dataset.lane; render(); }));
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+render();
+</script>

@@ -241,6 +241,20 @@ The English readings differ by more than 14 days in 96% of variants. Predicting 
 
 Concurrent delay cannot be settled by a model that searches for the fair apportionment. Treating doctrines as operators on one causal model makes the legal choice explicit and testable. One reading of English law is consistent with the decided cases. And explainable AI becomes a tool for locating where, and how much, that choice matters. On a real project, the decisive questions were evidential and procedural, namely access and notice, rather than doctrinal.
 
+## Figures
+
+| No. | File | Content |
+|---|---|---|
+| 1 | `outputs/v2/figures/law_timeline.png` | Evolution of the law, 1999–2024: three jurisdiction lanes, each entry coloured by the rule it supports, marked by how it was checked |
+| 2 | `outputs/v2/figures/fidelity_matrix.png` | Which operator reproduces which decision (Section 6) |
+| 3 | `outputs/v2/figures/money_vs_time.png` | Time diverges, money converges across the English readings (P1) |
+| 4 | `outputs/v2/figures/cliff_edge_still.png` | The gateway's cliff edge (P4) |
+| 5 | `outputs/v2/figures/synthetic_summary.png` | How often the readings disagree; ROC of the ex-ante screen (Section 7) |
+| 6 | `outputs/package5/figures/p5_notice.png` | Case study: notice scenarios (Section 8.3), anonymised |
+| 7 | `outputs/package5/figures/p5_drivers.png` | Case study: mean \|SHAP\| drivers of extension, paid days and contractor exposure (Section 8.4) |
+
+Supplementary animations: `law_timeline.mp4`, `seven_answers.mp4`, `cliff_edge.mp4` (public) and `backpropagation.mp4` (case study, anonymised).
+
 ## Code and data availability
 
 The code (`cdx` package, experiments, tests) is in the project repository. The case-study programme and contract are confidential and are excluded from the repository. Derived outputs are reproducible with `src/experiments/run_package5_xai.py` given the files.
