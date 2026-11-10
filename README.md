@@ -1,64 +1,68 @@
-# Concurrent Delay XAI
+# concurrent_delay_ml
 
-> **v2 (branch `v2-doctrine-operators`):** *One Schedule, Many Laws*. Concurrent delay doctrines (Malmaison/effective cause, Adyard first-in-time, SCL Protocol/Thomas Barnes overlap, City Inn apportionment, Cyden exclusion) are encoded as attribution operators on a single CPM causal model, tested against stylised versions of the cases, and explained with XAI. Design: [docs/study_redesign_v2.md](docs/study_redesign_v2.md).
->
-> ```
-> pip install -r requirements.txt
-> python -m pytest tests          # axioms, invariants, doctrinal fidelity
-> python src/experiments/run_v2.py  # E1 fidelity, E2 SHAP divergence model, E3 phase diagram, animation -> outputs/v2/
-> ```
-> Code: `src/cdx/` (schedule, network [real MS Project programmes via MSPDI], game, doctrines, contracts, cases, synth). Formal results: [docs/formal_results.md](docs/formal_results.md). Real-programme study: `python src/experiments/run_real.py` (needs the programme files in `data/programmes/`, which are kept out of git; convert .mpp to MSPDI XML with MPXJ). v1 results are archived unchanged in `outputs/v1/`.
-> Package 5 study (back-propagation, neutral events, notice gate, XAI ensemble): `python src/experiments/run_package5_xai.py` (needs the confidential programme and contract in `data/programmes/`). Paper draft: [docs/paper_v2_draft.md](docs/paper_v2_draft.md).
-> Note: v1 classifier metrics in `outputs/v1/model_metrics.csv` were produced with the RandomForest fallback (xgboost not installed). With xgboost installed the same script gives balanced accuracy 0.536 and ROC AUC 0.613.
+Python code, experiments, tests and documents for research on concurrent delay in construction: a causal model of a construction programme, with legal approaches to concurrency written as attribution rules on top of it.
 
----
+## Repository layout
 
-## v1 (archived)
+```
+src/
+  cdx/                    the package
+    schedule.py           simple CPM network (finish-to-start links)
+    network.py            real programmes from MS Project (MSPDI XML): SS/FF/SF links, lags,
+                          constraints, calendars, interruptions; logic-only conversion; health checks
+    game.py               delay events (employer / contractor / neutral) and the delay value function
+    doctrines.py          attribution rules (actual-delay test, strict sequence, overlapping windows,
+                          as-planned impact, City Inn, contractual exclusion, NEC4, windows analysis)
+    contracts.py          contract regimes (JCT, Cyden clause, Scots law, NEC4, FIDIC 1999/2017)
+    notices.py            notice condition (claims barred for late notice)
+    backprop.py           back-propagation of an impacted programme to a completion date
+    cases.py              stylised case library used by the fidelity tests
+    synth.py              random programmes and event sets for synthetic experiments
+  experiments/
+    run_v2.py             case fidelity, synthetic divergence model (XGBoost + SHAP), phase maps
+    run_real.py           study of a real impacted programme                  (needs local inputs)
+    run_package5_xai.py   back-propagation and XAI ensemble on that programme (needs local inputs)
+    make_figures.py       figures, MP4 animations, carousel
+    make_covers.py        cover graphics
+  liability_xai_pipeline.py, run_pipeline.py, simulation.py, synthetic_schedule.py, features.py, train.py
+                          v1 pipelines (kept for reproducibility; outputs in outputs/v1/)
+tests/                    unit, property and case-fidelity tests (pytest)
+explorer/                 interactive pages (HTML) and the case-law page template
+site/                     build script for the public site (site/build_site.py -> site/dist/)
+docs/                     study design, formal results, paper draft, case-law data (law_timeline.json), posts
+outputs/
+  v1/                     archived v1 results
+  v2/                     synthetic and case results, figures, animations, covers
+data/                     generated training data; local inputs go in data/programmes/ (not tracked)
+```
 
-# Concurrent Delay Vulnerability (ML)
+## Setup
 
-## Title Concept
-**A Machine Learning Approach to Predicting Concurrent Delay Vulnerability in Critical Path Networks**
+Python 3.9 or later.
 
-## Objective
-Build an early-warning system that predicts whether a project schedule configuration is vulnerable to **concurrent delay** before execution begins.
+```
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+```
 
-## Method Summary
-1. Generate synthetic CPM-like project networks as DAGs.
-2. Run Monte Carlo simulations with random Owner and Contractor risk events.
-3. Extract structural + risk features.
-4. Train ensemble classifiers (Random Forest, optional XGBoost) for `concurrent_delay` prediction.
-5. Calibrate probabilities (isotonic/sigmoid on grouped holdout).
-6. Export model performance, calibration curve, and explainability importance.
+Reading MS Project `.mpp` files also needs Java and [MPXJ](https://www.mpxj.org/) (`pip install mpxj`). Convert a programme to MSPDI XML with MPXJ's converter, then load it with `cdx.network.load_mspdi`.
 
-## Research-Grade Guardrails
-- Leakage-sensitive outcome columns (`owner_cp_delay`, `contractor_cp_delay`, `total_cp_delay`, `owner_delay_share`) are excluded from training features.
-- Train/test splitting is done by `schedule_id` groups, so simulation runs from the same schedule do not appear in both train and test.
+## Running
 
-## Project Structure
-- `src/synthetic_schedule.py` - baseline schedule/network generation
-- `src/simulation.py` - Monte Carlo risk injection and outcome labeling
-- `src/features.py` - feature table assembly
-- `src/train.py` - model training + evaluation
-- `src/run_pipeline.py` - one-command end-to-end pipeline
-- `requirements.txt` - dependencies
+```
+python -m pytest tests                     # full test suite
+python src/experiments/run_v2.py           # writes outputs/v2/
+python src/experiments/make_figures.py     # writes outputs/v2/figures/ (MP4 needs imageio-ffmpeg)
+python src/experiments/make_covers.py      # writes outputs/v2/figures/covers/
+python site/build_site.py                  # writes site/dist/index.html
+```
 
-## Output Artifacts
-- `outputs/model_metrics.csv`
-- `outputs/feature_importance.csv`
-- `outputs/calibration_curve.csv`
-- `outputs/explainability_importance.csv` (SHAP if installed, else permutation importance)
+`run_real.py` and `run_package5_xai.py` need a project programme, a contract and a small config file in `data/programmes/`. Those inputs are confidential and are not in the repository.
 
-## Quick Start
-1. Create/activate a Python environment.
-2. Install dependencies:
-   - `pip install -r requirements.txt`
-3. Run:
-   - `python src/run_pipeline.py`
+## What is not tracked
 
-Outputs are written to `outputs/`.
+`.gitignore` excludes `data/programmes/` (project programmes, contract and config), plus `outputs/real/` and `outputs/package5/`, which are derived from those inputs. Do not commit them.
 
-## Core Label Definition
-`concurrent_delay = 1` if both Owner and Contractor contribute non-trivial critical-path delay in the same simulation run; else `0`.
+## Public site
 
-This definition is configurable in `src/simulation.py`.
+`site/build_site.py` combines `explorer/concurrent_delay_explorer.html`, `explorer/law_timeline_template.html` and `docs/law_timeline.json` into one static page. The built page is published from the separate repository [concurrent-delay-map](https://github.com/gavacharles/concurrent-delay-map). To update it, rebuild and copy `site/dist/` there.
