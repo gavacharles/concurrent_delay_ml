@@ -492,7 +492,7 @@ def generate_visuals(
 
 def main() -> None:
     root = Path(__file__).resolve().parents[1]
-    out_dir = root / "outputs" / "liability_xai"
+    out_dir = root / "outputs" / "v1" / "liability_xai"
     out_dir.mkdir(parents=True, exist_ok=True)
 
     cfg = PipelineConfig()

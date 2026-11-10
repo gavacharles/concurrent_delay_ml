@@ -1,0 +1,64 @@
+case,case_name,citation,doctrine,eot,compensable,court_eot,court_compensable,reproduces_court,court_operator,law_verified,facts_verified
+malmaison,Henry Boot v Malmaison,(1999) 70 Con LR 32,but_for,0.0,0.0,10.0,0.0,False,False,True,False
+malmaison,Henry Boot v Malmaison,(1999) 70 Con LR 32,contractual_exclusion,0.0,0.0,10.0,0.0,False,False,True,False
+malmaison,Henry Boot v Malmaison,(1999) 70 Con LR 32,first_in_time,10.0,0.0,10.0,0.0,True,False,True,False
+malmaison,Henry Boot v Malmaison,(1999) 70 Con LR 32,nec4_prospective,10.0,10.0,10.0,0.0,False,False,True,False
+malmaison,Henry Boot v Malmaison,(1999) 70 Con LR 32,city_inn,5.0,0.0,10.0,0.0,False,False,True,False
+malmaison,Henry Boot v Malmaison,(1999) 70 Con LR 32,symmetric_shapley,5.0,0.0,10.0,0.0,False,False,True,False
+malmaison,Henry Boot v Malmaison,(1999) 70 Con LR 32,effective_cause,10.0,0.0,10.0,0.0,True,True,True,False
+malmaison,Henry Boot v Malmaison,(1999) 70 Con LR 32,overlap_concurrency,10.0,0.0,10.0,0.0,True,False,True,False
+malmaison,Henry Boot v Malmaison,(1999) 70 Con LR 32,as_planned_impact,10.0,0.0,10.0,0.0,True,False,True,False
+adyard,Adyard v SD Marine,[2011] EWHC 848 (Comm),but_for,0.0,0.0,0.0,0.0,True,False,True,True
+adyard,Adyard v SD Marine,[2011] EWHC 848 (Comm),contractual_exclusion,0.0,0.0,0.0,0.0,True,False,True,True
+adyard,Adyard v SD Marine,[2011] EWHC 848 (Comm),first_in_time,0.0,0.0,0.0,0.0,True,False,True,True
+adyard,Adyard v SD Marine,[2011] EWHC 848 (Comm),nec4_prospective,0.0,0.0,0.0,0.0,True,False,True,True
+adyard,Adyard v SD Marine,[2011] EWHC 848 (Comm),city_inn,62.0,0.0,0.0,0.0,False,False,True,True
+adyard,Adyard v SD Marine,[2011] EWHC 848 (Comm),symmetric_shapley,62.0,0.0,0.0,0.0,False,False,True,True
+adyard,Adyard v SD Marine,[2011] EWHC 848 (Comm),effective_cause,0.0,0.0,0.0,0.0,True,True,True,True
+adyard,Adyard v SD Marine,[2011] EWHC 848 (Comm),overlap_concurrency,124.0,0.0,0.0,0.0,False,False,True,True
+adyard,Adyard v SD Marine,[2011] EWHC 848 (Comm),as_planned_impact,124.0,0.0,0.0,0.0,False,False,True,True
+saga,Saga Cruises v Fincantieri,[2016] EWHC 1875 (Comm),but_for,0.0,0.0,0.0,0.0,True,False,True,True
+saga,Saga Cruises v Fincantieri,[2016] EWHC 1875 (Comm),contractual_exclusion,0.0,0.0,0.0,0.0,True,False,True,True
+saga,Saga Cruises v Fincantieri,[2016] EWHC 1875 (Comm),first_in_time,0.0,0.0,0.0,0.0,True,False,True,True
+saga,Saga Cruises v Fincantieri,[2016] EWHC 1875 (Comm),nec4_prospective,0.0,0.0,0.0,0.0,True,False,True,True
+saga,Saga Cruises v Fincantieri,[2016] EWHC 1875 (Comm),city_inn,4.5,0.0,0.0,0.0,False,False,True,True
+saga,Saga Cruises v Fincantieri,[2016] EWHC 1875 (Comm),symmetric_shapley,4.5,0.0,0.0,0.0,False,False,True,True
+saga,Saga Cruises v Fincantieri,[2016] EWHC 1875 (Comm),effective_cause,0.0,0.0,0.0,0.0,True,True,True,True
+saga,Saga Cruises v Fincantieri,[2016] EWHC 1875 (Comm),overlap_concurrency,9.0,0.0,0.0,0.0,False,False,True,True
+saga,Saga Cruises v Fincantieri,[2016] EWHC 1875 (Comm),as_planned_impact,9.0,0.0,0.0,0.0,False,False,True,True
+walter_lilly,Walter Lilly v Mackay,[2012] EWHC 1773 (TCC),but_for,507.0,507.0,507.0,507.0,True,False,True,True
+walter_lilly,Walter Lilly v Mackay,[2012] EWHC 1773 (TCC),contractual_exclusion,507.0,507.0,507.0,507.0,True,False,True,True
+walter_lilly,Walter Lilly v Mackay,[2012] EWHC 1773 (TCC),first_in_time,507.0,507.0,507.0,507.0,True,False,True,True
+walter_lilly,Walter Lilly v Mackay,[2012] EWHC 1773 (TCC),nec4_prospective,507.0,507.0,507.0,507.0,True,False,True,True
+walter_lilly,Walter Lilly v Mackay,[2012] EWHC 1773 (TCC),city_inn,507.0,507.0,507.0,507.0,True,False,True,True
+walter_lilly,Walter Lilly v Mackay,[2012] EWHC 1773 (TCC),symmetric_shapley,507.0,507.0,507.0,507.0,True,False,True,True
+walter_lilly,Walter Lilly v Mackay,[2012] EWHC 1773 (TCC),effective_cause,507.0,507.0,507.0,507.0,True,True,True,True
+walter_lilly,Walter Lilly v Mackay,[2012] EWHC 1773 (TCC),overlap_concurrency,507.0,507.0,507.0,507.0,True,False,True,True
+walter_lilly,Walter Lilly v Mackay,[2012] EWHC 1773 (TCC),as_planned_impact,507.0,507.0,507.0,507.0,True,False,True,True
+thomas_barnes,Thomas Barnes v Blackburn with Darwen,[2022] EWHC 2598 (TCC),but_for,27.0,27.0,119.0,27.0,False,False,True,True
+thomas_barnes,Thomas Barnes v Blackburn with Darwen,[2022] EWHC 2598 (TCC),contractual_exclusion,27.0,27.0,119.0,27.0,False,False,True,True
+thomas_barnes,Thomas Barnes v Blackburn with Darwen,[2022] EWHC 2598 (TCC),first_in_time,27.0,27.0,119.0,27.0,False,False,True,True
+thomas_barnes,Thomas Barnes v Blackburn with Darwen,[2022] EWHC 2598 (TCC),nec4_prospective,27.0,27.0,119.0,27.0,False,False,True,True
+thomas_barnes,Thomas Barnes v Blackburn with Darwen,[2022] EWHC 2598 (TCC),city_inn,73.0,27.0,119.0,27.0,False,False,True,True
+thomas_barnes,Thomas Barnes v Blackburn with Darwen,[2022] EWHC 2598 (TCC),symmetric_shapley,73.0,27.0,119.0,27.0,False,False,True,True
+thomas_barnes,Thomas Barnes v Blackburn with Darwen,[2022] EWHC 2598 (TCC),effective_cause,119.0,27.0,119.0,27.0,True,True,True,True
+thomas_barnes,Thomas Barnes v Blackburn with Darwen,[2022] EWHC 2598 (TCC),overlap_concurrency,119.0,27.0,119.0,27.0,True,False,True,True
+thomas_barnes,Thomas Barnes v Blackburn with Darwen,[2022] EWHC 2598 (TCC),as_planned_impact,119.0,27.0,119.0,27.0,True,False,True,True
+city_inn,City Inn v Shepherd,[2010] CSIH 68,but_for,5.0,5.0,12.5,,False,False,False,False
+city_inn,City Inn v Shepherd,[2010] CSIH 68,contractual_exclusion,5.0,5.0,12.5,,False,False,False,False
+city_inn,City Inn v Shepherd,[2010] CSIH 68,first_in_time,20.0,5.0,12.5,,False,False,False,False
+city_inn,City Inn v Shepherd,[2010] CSIH 68,nec4_prospective,20.0,20.0,12.5,,False,False,False,False
+city_inn,City Inn v Shepherd,[2010] CSIH 68,city_inn,12.5,5.0,12.5,,True,True,False,False
+city_inn,City Inn v Shepherd,[2010] CSIH 68,symmetric_shapley,12.5,5.0,12.5,,True,False,False,False
+city_inn,City Inn v Shepherd,[2010] CSIH 68,effective_cause,20.0,5.0,12.5,,False,False,False,False
+city_inn,City Inn v Shepherd,[2010] CSIH 68,overlap_concurrency,20.0,5.0,12.5,,False,False,False,False
+city_inn,City Inn v Shepherd,[2010] CSIH 68,as_planned_impact,20.0,5.0,12.5,,False,False,False,False
+cyden,North Midland v Cyden Homes,[2018] EWCA Civ 1744,but_for,0.0,0.0,0.0,0.0,True,False,True,False
+cyden,North Midland v Cyden Homes,[2018] EWCA Civ 1744,contractual_exclusion,0.0,0.0,0.0,0.0,True,True,True,False
+cyden,North Midland v Cyden Homes,[2018] EWCA Civ 1744,first_in_time,10.0,0.0,0.0,0.0,False,False,True,False
+cyden,North Midland v Cyden Homes,[2018] EWCA Civ 1744,nec4_prospective,10.0,10.0,0.0,0.0,False,False,True,False
+cyden,North Midland v Cyden Homes,[2018] EWCA Civ 1744,city_inn,5.0,0.0,0.0,0.0,False,False,True,False
+cyden,North Midland v Cyden Homes,[2018] EWCA Civ 1744,symmetric_shapley,5.0,0.0,0.0,0.0,False,False,True,False
+cyden,North Midland v Cyden Homes,[2018] EWCA Civ 1744,effective_cause,10.0,0.0,0.0,0.0,False,False,True,False
+cyden,North Midland v Cyden Homes,[2018] EWCA Civ 1744,overlap_concurrency,10.0,0.0,0.0,0.0,False,False,True,False
+cyden,North Midland v Cyden Homes,[2018] EWCA Civ 1744,as_planned_impact,10.0,0.0,0.0,0.0,False,False,True,False

@@ -9,7 +9,7 @@ from train import save_training_outputs, train_and_evaluate
 def main() -> None:
     root = Path(__file__).resolve().parents[1]
     data_path = root / "data" / "concurrent_delay_training_data.csv"
-    out_dir = root / "outputs"
+    out_dir = root / "outputs" / "v1"
 
     print("[1/3] Building synthetic Monte Carlo dataset...")
     df = build_dataset(n_schedules=450, sims_per_schedule=90, seed=2026)

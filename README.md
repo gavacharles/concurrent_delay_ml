@@ -1,3 +1,20 @@
+# Concurrent Delay XAI
+
+> **v2 (branch `v2-doctrine-operators`):** *One Schedule, Many Laws*. Concurrent delay doctrines (Malmaison/effective cause, Adyard first-in-time, SCL Protocol/Thomas Barnes overlap, City Inn apportionment, Cyden exclusion) are encoded as attribution operators on a single CPM causal model, tested against stylised versions of the cases, and explained with XAI. Design: [docs/study_redesign_v2.md](docs/study_redesign_v2.md).
+>
+> ```
+> pip install -r requirements.txt
+> python -m pytest tests          # axioms, invariants, doctrinal fidelity
+> python src/experiments/run_v2.py  # E1 fidelity, E2 SHAP divergence model, E3 phase diagram, animation -> outputs/v2/
+> ```
+> Code: `src/cdx/` (schedule, network [real MS Project programmes via MSPDI], game, doctrines, contracts, cases, synth). Formal results: [docs/formal_results.md](docs/formal_results.md). Real-programme study: `python src/experiments/run_real.py` (needs the programme files in `data/programmes/`, which are kept out of git; convert .mpp to MSPDI XML with MPXJ). v1 results are archived unchanged in `outputs/v1/`.
+> Package 5 study (back-propagation, neutral events, notice gate, XAI ensemble): `python src/experiments/run_package5_xai.py` (needs the confidential programme and contract in `data/programmes/`). Paper draft: [docs/paper_v2_draft.md](docs/paper_v2_draft.md).
+> Note: v1 classifier metrics in `outputs/v1/model_metrics.csv` were produced with the RandomForest fallback (xgboost not installed). With xgboost installed the same script gives balanced accuracy 0.536 and ROC AUC 0.613.
+
+---
+
+## v1 (archived)
+
 # Concurrent Delay Vulnerability (ML)
 
 ## Title Concept

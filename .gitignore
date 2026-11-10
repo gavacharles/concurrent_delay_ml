@@ -1,0 +1,6 @@
+
+# real project programmes: keep out of git
+data/programmes/
+.pytest_cache/
+outputs/real/
+outputs/package5/
