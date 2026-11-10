@@ -21,6 +21,7 @@ SITE_URL = "https://gavacharles.github.io/concurrent-delay-map/"
 
 # Credit shown on every view, in the citation and in the page metadata.
 AUTHOR = "Charles Gava"
+CREDIT = "Research by"                 # wording used in the header, titles, visuals and footer
 AUTHOR_LINKS = [("GitHub", "https://github.com/gavacharles")]   # add ("LinkedIn", url), ("Substack", url)
 YEAR = 2026
 CITATION = (f"Gava, C. ({YEAR}) Concurrent Delay Map: seven legal rules on one programme, and the case law "
@@ -51,6 +52,36 @@ def main():
     tl_body = re.sub(r'<a href="https://claude\.ai/artifact/[^"]+"[^>]*>Concurrent Delay Explorer</a>',
                      '<a href="#explorer">Concurrent Delay Explorer</a>', tl_body)
     assert "claude.ai" not in tl_body + ex_body, "private links left in the public page"
+
+    # --- credit: "Research by Charles Gava" under each title and signed onto every visual -------
+    who = f'<a href="{AUTHOR_LINKS[0][1]}" target="_blank" rel="noopener author">{AUTHOR}</a>'
+    credit_p = f'<p class="credit">{CREDIT} {who}</p>'
+
+    def swap(text, old, new, where):
+        assert old in text, f"credit patch did not apply in {where}: {old[:50]}"
+        return text.replace(old, new, 1)
+
+    ex_body = swap(ex_body, "<h1>Same delays. Different law. Different answer.</h1>",
+                   "<h1>Same delays. Different law. Different answer.</h1>\n    " + credit_p, "explorer title")
+    tl_body = swap(tl_body, "<h1>How the law on concurrent delay got here</h1>",
+                   "<h1>How the law on concurrent delay got here</h1>\n    " + credit_p, "case-law title")
+    sig = f"{CREDIT} {AUTHOR} · Concurrent Delay Map"
+    # programme strip (explorer): one extra row at the bottom for the signature
+    ex_js = swap(ex_js, 'let s = `<svg viewBox="0 0 ${W} ${H}" height="${H}"',
+                 'let s = `<svg viewBox="0 0 ${W} ${H + 16}" height="${H + 16}"', "programme strip")
+    ex_js = swap(ex_js, "  s += `</svg>`;",
+                 f'  s += `<text x="${{W - 2}}" y="${{H + 12}}" text-anchor="end" font-size="10.5" '
+                 f'fill="${{muted}}" font-family="Archivo, sans-serif">{sig}</text></svg>`;', "programme strip")
+    # 'where the law matters' canvas: bottom-right, below the tick labels
+    ex_js = swap(ex_js, "  cv._geom = { padL, padT, pw, ph };",
+                 '  ctx.save(); ctx.textAlign = "right"; ctx.fillStyle = css("--muted"); '
+                 'ctx.font = "10.5px Archivo, sans-serif"; '
+                 f'ctx.fillText("{sig}", padL + pw, H - 1); ctx.restore();\n'
+                 "  cv._geom = { padL, padT, pw, ph };", "law map canvas")
+    # case-law strip: top-right corner, above the lanes
+    tl_js = swap(tl_js, "  s += `</svg>`;",
+                 f'  s += `<text x="${{W - 4}}" y="13" text-anchor="end" font-size="11" fill="${{css("--muted")}}" '
+                 f'font-family="Archivo, sans-serif">{sig}</text></svg>`;', "case-law strip")
 
     page = f"""<!doctype html>
 <html lang="en">
@@ -100,6 +131,9 @@ body {{ margin: 0; }}
 .tabs a:focus-visible {{ outline: 2px solid var(--focus); outline-offset: 2px; }}
 .site .gh {{ margin-left: auto; font: 500 13px var(--f-data); color: var(--muted); }}
 .byline {{ font: 500 13px var(--f-display); color: var(--muted); }}
+.credit {{ font: 600 14px var(--f-display); color: var(--muted); margin: 0; }}
+.credit a {{ color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--rule); }}
+.credit a:hover {{ border-color: var(--ink); }}
 .byline a {{ color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); }}
 .credits {{ border-top: 1px solid var(--rule); background: var(--sheet); }}
 .credits .in {{ max-width: 1120px; margin: 0 auto; display: grid; gap: 12px;
@@ -128,7 +162,7 @@ body {{ margin: 0; }}
       <a href="#explorer" data-view="explorer">Explorer</a>
       <a href="#case-law" data-view="caselaw">Case law, 1999–2024</a>
     </nav>
-    <span class="byline">by <a href="{AUTHOR_LINKS[0][1]}" target="_blank" rel="noopener author">{AUTHOR}</a></span>
+    <span class="byline">{CREDIT} <a href="{AUTHOR_LINKS[0][1]}" target="_blank" rel="noopener author">{AUTHOR}</a></span>
     <a class="gh" href="{REPO_URL}" target="_blank" rel="noopener">Source</a>
   </div>
 </header>
@@ -142,7 +176,7 @@ body {{ margin: 0; }}
 </main>
 <footer class="credits" aria-label="Credits">
   <div class="in">
-    <div class="who">Created by <a href="{AUTHOR_LINKS[0][1]}" target="_blank" rel="noopener author">{AUTHOR}</a></div>
+    <div class="who">{CREDIT} <a href="{AUTHOR_LINKS[0][1]}" target="_blank" rel="noopener author">{AUTHOR}</a></div>
     <p>Research, legal analysis, causal model and design for <i>One Schedule, Many Laws: doctrine-conditioned causal attribution and explainable AI for concurrent delay</i>.</p>
     <div class="links">{"".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in AUTHOR_LINKS)}<a href="{REPO_URL}" target="_blank" rel="noopener">Source code</a></div>
     <div class="citebox">

@@ -104,7 +104,7 @@ I wrote the winning rule after reading the judgments, so this is consistency, no
   2. whether a 28-day notice was given. Without it, the paid days fall to zero and delay damages reach the 10% cap;
   3. only then, which concurrency rule applies.
 
-<!-- FIGURES (anonymised; confirm you may use the project first): outputs/package5/figures/backpropagation.mp4, p5_notice.png, p5_drivers.png -->
+<!-- FIGURES (anonymised project, cleared for use): outputs/package5/figures/backpropagation.mp4, p5_notice.png, p5_drivers.png -->
 
 The same tool, SHAP, now answers a different question. It doesn't tell you who should pay. It tells you what the answer turns on.
 

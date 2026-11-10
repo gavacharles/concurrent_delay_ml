@@ -104,7 +104,7 @@ The most instructive test was a real FIDIC 1999 design-and-build road contract t
 
 On that evidence the competing doctrines differed by only four days. An explainable model trained on 1,500 variations of the unknowns, with an R² of about 0.95, showed what actually decides the case. The first factor is who controlled access to a single pavement workfront, which drives three-quarters of the overrun. The second is whether a 28-day notice was given; without it, the paid days fall to zero and delay damages reach the contractual cap of ten per cent of the price. Only after those two questions does the choice of concurrency doctrine come into play. COVID-19 lockdowns, which give time but no money under the 1999 form, did not reduce the paid days, because each lockdown arrived while site access was already late.
 
-[IMAGE (anonymised; confirm you may use the project first): outputs/package5/figures/p5_notice.png. Caption: "On a real project, the notice condition outweighed the concurrency rule."]
+[IMAGE (anonymised project, cleared for use): outputs/package5/figures/p5_notice.png. Caption: "On a real project, the notice condition outweighed the concurrency rule."]
 
 The same tool, SHAP, ends up answering a different question. It does not tell you who should pay. It tells you what the answer turns on.
 
