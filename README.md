@@ -1,47 +1,29 @@
-# Concurrent Delay Vulnerability (ML)
+# concurrent_delay_ml
 
-## Title Concept
-**A Machine Learning Approach to Predicting Concurrent Delay Vulnerability in Critical Path Networks**
+Python code, experiments and outputs for research on concurrent delay in construction programmes.
 
-## Objective
-Build an early-warning system that predicts whether a project schedule configuration is vulnerable to **concurrent delay** before execution begins.
+The `main` branch holds the first version (v1): two pipelines on synthetic critical-path networks. The current version, a causal programme model with legal attribution rules, tests and experiments, is on the branch `v2-doctrine-operators` (pull request #1); its README describes that layout.
 
-## Method Summary
-1. Generate synthetic CPM-like project networks as DAGs.
-2. Run Monte Carlo simulations with random Owner and Contractor risk events.
-3. Extract structural + risk features.
-4. Train ensemble classifiers (Random Forest, optional XGBoost) for `concurrent_delay` prediction.
-5. Calibrate probabilities (isotonic/sigmoid on grouped holdout).
-6. Export model performance, calibration curve, and explainability importance.
+## Contents of `main`
 
-## Research-Grade Guardrails
-- Leakage-sensitive outcome columns (`owner_cp_delay`, `contractor_cp_delay`, `total_cp_delay`, `owner_delay_share`) are excluded from training features.
-- Train/test splitting is done by `schedule_id` groups, so simulation runs from the same schedule do not appear in both train and test.
+| Path | What it is |
+|---|---|
+| `src/synthetic_schedule.py` | Synthetic CPM networks (directed acyclic graphs) |
+| `src/simulation.py` | Monte Carlo owner and contractor risk events, concurrency labels |
+| `src/features.py` | Feature table assembly |
+| `src/train.py` | Classifier training, grouped train/test split, calibration, importance |
+| `src/run_pipeline.py` | One-command run of the classification pipeline |
+| `src/liability_xai_pipeline.py` | Liability-apportionment pipeline (surrogate model + SHAP) |
+| `data/concurrent_delay_training_data.csv` | Generated training data (rebuilt by `run_pipeline.py`) |
+| `outputs/` | Metrics, importance tables, plots and write-ups produced by the pipelines |
+| `requirements.txt` | Python dependencies |
 
-## Project Structure
-- `src/synthetic_schedule.py` - baseline schedule/network generation
-- `src/simulation.py` - Monte Carlo risk injection and outcome labeling
-- `src/features.py` - feature table assembly
-- `src/train.py` - model training + evaluation
-- `src/run_pipeline.py` - one-command end-to-end pipeline
-- `requirements.txt` - dependencies
+## Setup and running
 
-## Output Artifacts
-- `outputs/model_metrics.csv`
-- `outputs/feature_importance.csv`
-- `outputs/calibration_curve.csv`
-- `outputs/explainability_importance.csv` (SHAP if installed, else permutation importance)
+```
+pip install -r requirements.txt
+python src/run_pipeline.py            # classification pipeline -> outputs/
+python src/liability_xai_pipeline.py  # liability pipeline -> outputs/liability_xai/
+```
 
-## Quick Start
-1. Create/activate a Python environment.
-2. Install dependencies:
-   - `pip install -r requirements.txt`
-3. Run:
-   - `python src/run_pipeline.py`
-
-Outputs are written to `outputs/`.
-
-## Core Label Definition
-`concurrent_delay = 1` if both Owner and Contractor contribute non-trivial critical-path delay in the same simulation run; else `0`.
-
-This definition is configurable in `src/simulation.py`.
+`xgboost` and `shap` are optional for the classifier (it falls back to a random forest) but required by the liability pipeline.
