@@ -65,7 +65,12 @@ def main():
 <meta name="author" content="{AUTHOR}">
 <meta property="og:url" content="{SITE_URL}">
 <meta property="og:site_name" content="Concurrent Delay Map by {AUTHOR}">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="{SITE_URL}og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="One Schedule, Many Laws: one programme, seven legal answers on concurrent delay. By {AUTHOR}.">
+<meta name="twitter:image" content="{SITE_URL}og-image.png">
 <link rel="author" href="{AUTHOR_LINKS[0][1]}">
 <script type="application/ld+json">{json.dumps({"@context": "https://schema.org", "@type": "WebApplication",
   "name": "Concurrent Delay Map", "url": SITE_URL, "applicationCategory": "EducationalApplication",
@@ -186,6 +191,10 @@ window.__renderExplorer = () => render();
     DIST.mkdir(parents=True, exist_ok=True)
     (DIST / "index.html").write_text(page)
     (DIST / ".nojekyll").write_text("")
+    import shutil
+    cover = ROOT / "outputs" / "v2" / "figures" / "covers" / "link_preview_1200x630.png"
+    if cover.exists():
+        shutil.copy(cover, DIST / "og-image.png")
     print("wrote", DIST / "index.html", f"({len(page) / 1024:.0f} KB)")
 
 
