@@ -1,6 +1,6 @@
 <!-- MEDIA: document post (carousel): outputs/package5/figures/linkedin_carousel.pdf
      Alternative: video post with outputs/v2/figures/law_timeline.mp4 or seven_answers.mp4.
-     First comment: link to the Substack piece and the interactive timeline. -->
+     First comment: link to the Substack piece and the map: https://gavacharles.github.io/concurrent-delay-map/ -->
 
 Can AI tell us who pays for concurrent delay? I think we've been asking it the wrong question. 👇
 
@@ -26,6 +26,8 @@ What came out:
 → On a real FIDIC 1999 road project, the doctrines differed by 4 days. What decided it was who controlled site access and whether a 28-day notice was given.
 
 Why XAI? Transparency for tribunals, rules an opponent can audit, and knowing where the evidence matters.
+
+Try it yourself: move the delays and watch seven legal rules respond, then trace 25 years of case law 👉 gavacharles.github.io/concurrent-delay-map
 
 Carousel below. Challenge welcome.
 

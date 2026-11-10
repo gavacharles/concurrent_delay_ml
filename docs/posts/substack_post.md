@@ -22,7 +22,7 @@ Same facts, several defensible answers. That isn't sloppy analysis. The law itse
 
 ## 1. How the law got here
 
-<!-- FIGURE: outputs/v2/figures/law_timeline.png (video: law_timeline.mp4). Link: interactive case-law timeline. -->
+<!-- FIGURE: outputs/v2/figures/law_timeline.png (video: law_timeline.mp4). Link: https://gavacharles.github.io/concurrent-delay-map/#case-law -->
 
 **1999–2009: time, not money.** *Henry Boot v Malmaison* (1999) gave the contractor an extension for the period of delay caused by the employer's event, even though its own delay was running at the same time. *Royal Brompton v Hammond* (2001) added a condition: an employer event with no effect on the completion date earns nothing. The first SCL Delay and Disruption Protocol (2002) took a broad view of concurrency, covering delays whose effects are felt at the same time.
 
@@ -112,7 +112,7 @@ The same tool, SHAP, now answers a different question. It doesn't tell you who s
 
 It isn't a machine that decides disputes. Legal causation involves judgement: what counts as "dominant", or how culpable a party was. The framework turns those judgements into visible parameters and shows how much each one moves the answer. The contract governs everything. It's a tool for experts, not a replacement for them.
 
-**Explore it yourself:** the interactive case-law timeline and the concurrent delay explorer let you move the delays and watch each rule respond. <!-- links: share both pages publicly before posting -->
+**Explore it yourself:** the [Concurrent Delay Map](https://gavacharles.github.io/concurrent-delay-map/) lets you move the delays and watch each rule respond, and trace the case law since 1999 ([case-law view](https://gavacharles.github.io/concurrent-delay-map/#case-law)).
 
 **For delay experts and construction lawyers:**
 - Is the actual-delay test the right reading of English law after *Thomas Barnes*?
