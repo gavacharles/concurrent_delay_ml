@@ -1,0 +1,10 @@
+,value
+configurations,6000.0
+with_any_net_delay,0.9545
+english_doctrines_disagree,0.308
+english_disagree_given_delay,0.322682032477737
+median_spread_when_disagree_days,7.0
+scotland_differs_from_overlap,0.3443333333333333
+r2_english_spread,0.4729997908954572
+r2_scotland_minus_england,0.2632273934561795
+r2_exante_screen,0.8484628419268943
